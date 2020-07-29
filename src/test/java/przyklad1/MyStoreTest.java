@@ -25,7 +25,7 @@ public class MyStoreTest {
 
         // Zmaksymalizuj okno przeglądarki
         driver.manage().window().maximize();
-        // Przejdź do Google
+        // Przejdź do MyStore
         driver.get("https://prod-kurs.coderslab.pl/index.php");
     }
 
