@@ -13,8 +13,8 @@ import java.util.Random;
 public class MyStoreRegister {
 
     private WebDriver driver;
-    private static final int NUMBER_OF_ACCOUNTS_TO_CREATE = 3;
-    private static final int RANDOM_MAX_RANGE = 100;
+    private static final int NUMBER_OF_ACCOUNTS_TO_CREATE = 10;
+    private static final int RANDOM_MAX_RANGE = 1000;
     Random random = new Random();
     Date date= new Date();
     String webpage = "https://prod-kurs.coderslab.pl/index.php?controller=authentication&create_account=1";
@@ -66,7 +66,8 @@ public class MyStoreRegister {
     //generates email with the use of timestamp
     public String generateRandomEmail(){
         long time = date.getTime();
-        return "testowy" + time  + emails[random.nextInt(RANDOM_MAX_RANGE) % emails.length];
+        return "testowy" + time + random.nextInt(RANDOM_MAX_RANGE) +
+                emails[random.nextInt(RANDOM_MAX_RANGE) % emails.length];
     }
 
     public String generateRandomFirstName(){
