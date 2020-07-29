@@ -26,44 +26,45 @@ public class MyStoreRegister {
 
     @Before
     public void setUp() {
-        // Uruchom nowy egzemplarz przeglądarki Chrome
+        // Start a new Chrome Browser
         System.setProperty("webdriver.chrome.driver",
                 "src/main/resources/drivers/chromedriver");
         driver = new ChromeDriver();
 
-        // Zmaksymalizuj okno przeglądarki
+        // Maximize the window
         driver.manage().window().maximize();
-        // Przejdź do strony Sign in strony MyStore
+        // Go to the website
         driver.get(webpage);
     }
 
     @Test
     public void MyStoreRegisterTest() throws InterruptedException {
 
-        //Stwórz tyle kont użytkowników ile zdefiniowane w NUMBER_OF_ACCOUNTS_TO_CREATE
+        //Create accounts based on NUMBER_OF_ACCOUNTS_TO_CREATE
         for (int i = 0; i < NUMBER_OF_ACCOUNTS_TO_CREATE; i++) {
 
-            //Znajdowanie elementów
+            //Finding elements
             WebElement firstName = driver.findElement(By.name("firstname"));
             WebElement lastName = driver.findElement(By.name("lastname"));
             WebElement email = driver.findElement(By.name("email"));
             WebElement password = driver.findElement(By.name("password"));
             WebElement saveBtn = driver.findElement(By.xpath("//button[@data-link-action='save-customer']"));
 
+            //Enter data
             firstName.sendKeys(generateRandomFirstName());
             lastName.sendKeys(generateRandomLastName());
             email.sendKeys(generateRandomEmail());
             password.sendKeys(randomPasswordGenerator());
             saveBtn.click();
 
-            //Proces wylogowania
+            //Log out
             WebElement logOutBtn = driver.findElement(By.xpath("//a[@class='logout hidden-sm-down']"));
             logOutBtn.click();
             driver.get(webpage);
         }
     }
 
-    //generates email with the use of timestamp
+    //generate random email with the use of timestamp
     public String generateRandomEmail(){
         long time = date.getTime();
         return "testowy" + time + random.nextInt(RANDOM_MAX_RANGE) +
@@ -78,6 +79,7 @@ public class MyStoreRegister {
         return lastNames[random.nextInt(RANDOM_MAX_RANGE) % lastNames.length];
     }
 
+    //generate random 5 character password
     public String randomPasswordGenerator(){
         String result;
         StringBuilder sb = new StringBuilder();
