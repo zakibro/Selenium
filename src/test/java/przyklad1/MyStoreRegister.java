@@ -1,5 +1,6 @@
 package przyklad1;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
@@ -17,18 +18,17 @@ public class MyStoreRegister {
     private static final int NUMBER_OF_ACCOUNTS_TO_CREATE = 10;
     private static final int RANDOM_MAX_RANGE = 100;
     Random random = new Random();
-    Date date= new Date();
+    Date date = new Date();
     String webpage = "https://prod-kurs.coderslab.pl/index.php?controller=authentication&create_account=1";
 
-    String [] firstNames = {"Paweł", "Karol", "Maciej", "Jakub", "Michał", "Zbigniew", "Tester"};
-    String [] lastNames = {"Kowalski", "Mazur", "Lewandowski", "Aleksandrowicz", "Danielak", "Testowy"};
-    String [] emails = {"@gmail.com", "@yahoo.com", "@interia.pl", "@onet.pl", "@wp.pl", "@o2.pl", "@gazeta.pl"};
-    String [] companies = {"Shopify", "Google", "Facebook", "Twitter", "Apple", "Netflix", "Amazon", "Tesla", "Microsoft"};
-    String [] addresses = {"York Road", "Mill Lane", "Chester Road", "Park Lane", "Highfield Road", "Station Road", "Broadway",
-    "York Road"};
-    String [] cities = {"INVERNESS", "DURHAM", "READING", "BELFAST", "DARTFORD", "SWINDON", "DONCASTER", "NOTTINGHAM",
-    "MANCHESTER", "CHESTER"};
-
+    String[] firstNames = {"Paweł", "Karol", "Maciej", "Jakub", "Michał", "Zbigniew", "Tester"};
+    String[] lastNames = {"Kowalski", "Mazur", "Lewandowski", "Aleksandrowicz", "Danielak", "Testowy"};
+    String[] emails = {"@gmail.com", "@yahoo.com", "@interia.pl", "@onet.pl", "@wp.pl", "@o2.pl", "@gazeta.pl"};
+    String[] companies = {"Shopify", "Google", "Facebook", "Twitter", "Apple", "Netflix", "Amazon", "Tesla", "Microsoft"};
+    String[] addresses = {"York Road", "Mill Lane", "Chester Road", "Park Lane", "Highfield Road", "Station Road",
+            "Broadway", "York Road"};
+    String[] cities = {"INVERNESS", "DURHAM", "READING", "BELFAST", "DARTFORD", "SWINDON", "DONCASTER", "NOTTINGHAM",
+            "MANCHESTER", "CHESTER"};
 
 
     @Before
@@ -72,7 +72,7 @@ public class MyStoreRegister {
             WebElement addres = driver.findElement(By.name("address1"));
             WebElement postcode = driver.findElement(By.name("postcode"));
             WebElement city = driver.findElement(By.name("city"));
-            Select countryDropdown = new Select (driver.findElement(By.name("id_country")));
+            Select countryDropdown = new Select(driver.findElement(By.name("id_country")));
             WebElement addressFormSaveBtn = driver.findElement(By.cssSelector("button.btn.btn-primary.float-xs-right"));
 
             //Entering data to Address form
@@ -83,7 +83,6 @@ public class MyStoreRegister {
             countryDropdown.selectByIndex(1);
             addressFormSaveBtn.click();
 
-
             //Log out
             WebElement logOutBtn = driver.findElement(By.xpath("//a[@class='logout hidden-sm-down']"));
             logOutBtn.click();
@@ -91,12 +90,19 @@ public class MyStoreRegister {
         }
     }
 
+    @After
+    public void tearDown() throws Exception {
+        // Close the browser
+        driver.quit();
+    }
+
     /**
      * Generates the random email
      * Uses the emails table and timestamp to randomize the output
+     *
      * @return random generate email
      */
-    public String generateRandomEmail(){
+    public String generateRandomEmail() {
         long time = date.getTime();
         return "testowy" + time + random.nextInt(RANDOM_MAX_RANGE) +
                 emails[random.nextInt(RANDOM_MAX_RANGE) % emails.length];
@@ -105,43 +111,50 @@ public class MyStoreRegister {
     /**
      * Generates random first name
      * Uses the firstNames table
+     *
      * @return random firstName
      */
-    public String generateRandomFirstName(){
+    public String generateRandomFirstName() {
         return firstNames[random.nextInt(RANDOM_MAX_RANGE) % firstNames.length];
     }
 
     /**
      * Generates random last name
      * Uses the lastNames table
+     *
      * @return random lastName
      */
-    public String generateRandomLastName(){
+    public String generateRandomLastName() {
         return lastNames[random.nextInt(RANDOM_MAX_RANGE) % lastNames.length];
     }
 
     /**
      * Generates random company
      * Uses the companies table
+     *
      * @return random company
      */
-    public String generateRandomCompany(){return companies[random.nextInt(RANDOM_MAX_RANGE) % companies.length];}
+    public String generateRandomCompany() {
+        return companies[random.nextInt(RANDOM_MAX_RANGE) % companies.length];
+    }
 
     /**
      * Generates random address
      * Uses random number and addresses table
+     *
      * @return random address
      */
-    public String generateRandomAddress(){
-        return random.nextInt(RANDOM_MAX_RANGE) + " " +addresses[random.nextInt(RANDOM_MAX_RANGE) % addresses.length];
+    public String generateRandomAddress() {
+        return random.nextInt(RANDOM_MAX_RANGE) + " " + addresses[random.nextInt(RANDOM_MAX_RANGE) % addresses.length];
     }
 
     /**
      * Generates random UK postal code
      * Creates the code with the following format '[A-Z][A-Z][0-9][0-9] [0-9][A-Z][A-Z]'
+     *
      * @return random postcode
      */
-    public String generateRandomPostcode(){
+    public String generateRandomPostcode() {
         int numberOfCharsinCode = 8;
         StringBuilder sb = new StringBuilder();
         String setOfCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -150,14 +163,12 @@ public class MyStoreRegister {
 
         for (int i = 0; i < numberOfCharsinCode; i++) {
 
-            if (i == 2 || i == 3 || i == 5){
+            if (i == 2 || i == 3 || i == 5) {
                 k = random.nextInt(setOfNumbers.length() - 1);
                 sb.append(setOfNumbers.charAt(k));
-            }
-            else if (i == 4){
+            } else if (i == 4) {
                 sb.append(" ");
-            }
-            else {
+            } else {
                 k = random.nextInt(setOfCharacters.length() - 1);
                 sb.append(setOfCharacters.charAt(k));
             }
@@ -168,24 +179,26 @@ public class MyStoreRegister {
     /**
      * Generates random city
      * Uses the cities table
+     *
      * @return random city
      */
-    public String generateRandomCity(){
+    public String generateRandomCity() {
         return cities[random.nextInt(RANDOM_MAX_RANGE) % cities.length];
     }
 
     /**
      * Generates random 5 character password
      * Uses lowercase characters, digital numbers and special characters
+     *
      * @return random password
      */
-    public String randomPasswordGenerator(){
+    public String randomPasswordGenerator() {
         StringBuilder sb = new StringBuilder();
         int numberOfCharsInPwd = 5;
         String setOfCharacters = "abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()";
 
-        for (int i= 0; i < numberOfCharsInPwd; i++) {
-            int k = random.nextInt(setOfCharacters.length()-1);
+        for (int i = 0; i < numberOfCharsInPwd; i++) {
+            int k = random.nextInt(setOfCharacters.length() - 1);
             sb.append(setOfCharacters.charAt(k));
         }
         return sb.toString();
