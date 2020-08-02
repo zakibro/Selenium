@@ -80,7 +80,7 @@ public class MyStoreRegister {
             addres.sendKeys(generateRandomAddress());
             postcode.sendKeys(generateRandomPostcode());
             city.sendKeys(generateRandomCity());
-            countryDropdown.selectByIndex(1);
+            countryDropdown.selectByValue("17");
             addressFormSaveBtn.click();
 
             //Log out
