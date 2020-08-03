@@ -13,6 +13,9 @@ import java.util.concurrent.TimeUnit;
 
 public class MyStoreFilteringTest {
 
+    private final static double LOW_PRICE = 11.00;
+    private final static double MAX_PRICE = 14.00;
+
     private WebDriver driver;
     private final static String WEBPAGE  = "https://prod-kurs.coderslab.pl/index.php?id_category=2&controller=category";
     private final static String[] Accessories = {"Mug", "Cushion", "Poster", "Notebook"};
@@ -54,19 +57,17 @@ public class MyStoreFilteringTest {
 
         Thread.sleep(1000);
 
-/*        if (priceFilter.isDisplayed()){
-            priceFilter.click();
-
-        }
-        else Assert.fail();*/
 
         List<WebElement> pricesOfFoundProducts = driver.findElements(By.
                 className("price"));
 
 
-        System.out.println(pricesOfFoundProducts.size());
         for (int i = 0; i < pricesOfFoundProducts.size(); i++) {
-            System.out.println(pricesOfFoundProducts.get(i).getText());
+            String priceWith$ = pricesOfFoundProducts.get(i).getText();
+            String priceString = priceWith$.replaceAll("[€]", "");
+            double priceDouble = Double.parseDouble(priceString);
+            if (priceDouble >= LOW_PRICE || priceDouble <= MAX_PRICE)
+                System.out.println(priceDouble);
         }
 
     }
