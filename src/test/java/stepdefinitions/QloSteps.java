@@ -1,5 +1,6 @@
 package stepdefinitions;
 
+import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -43,36 +44,39 @@ public class QloSteps {
         driver.get("https://qloapps.coderslab.pl/en/login");
     }
 
-    @When("^user enters valid email address which hasn't been used$")
-    public void userEntersValidEmailAddressWhichHasnTBeenUsed(){
+    @When("^user enters valid  \"([^\"]*)\" address which hasn't been used$")
+    public void userEntersValidAddressWhichHasnTBeenUsed(String email) throws Throwable {
+
         //finding elements
-        WebElement email = driver.findElement(By.id("email_create"));
-        email.clear();
+        WebElement emailInput = driver.findElement(By.id("email_create"));
+        emailInput.clear();
         //entering random email and submitting
-        email.sendKeys(generateRandomEmail());
-        email.submit();
+        emailInput.sendKeys(email);
+        emailInput.submit();
     }
 
-    @And("^user enters the valid registration details$")
-    public void userEntersTheValidRegistrationDetails() {
+
+    @And("^user enters the valid : \"([^\"]*)\", \"([^\"]*)\" and \"([^\"]*)\"$")
+    public void userEntersTheValidAnd(String firstName, String lastName, String password) throws Throwable {
+
         //finding registration form elements
         WebElement gender = driver.findElement(By.xpath("//div[@id='uniform-id_gender1']"));
-        WebElement firstName = driver.findElement(By.id("customer_firstname"));
-        WebElement lastName = driver.findElement(By.id("customer_lastname"));
-        WebElement password = driver.findElement(By.id("passwd"));
+        WebElement firstNameInput = driver.findElement(By.id("customer_firstname"));
+        WebElement lastNameInput = driver.findElement(By.id("customer_lastname"));
+        WebElement passwordInput = driver.findElement(By.id("passwd"));
         WebElement submitBtn = driver.findElement(By.id("submitAccount"));
 
         //entering data
         gender.click();
 
-        firstName.clear();
-        firstName.sendKeys(FIRST_NAME);
+        firstNameInput.clear();
+        firstNameInput.sendKeys(firstName);
 
-        lastName.clear();
-        lastName.sendKeys(LAST_NAME);
+        lastNameInput.clear();
+        lastNameInput.sendKeys(lastName);
 
-        password.clear();
-        password.sendKeys(PASSWORD);
+        passwordInput.clear();
+        passwordInput.sendKeys(password);
 
         submitBtn.click();
     }
@@ -84,11 +88,10 @@ public class QloSteps {
         Assert.assertTrue(successAlert.getText().contains(SUCCESS_ACCOUNT_CREATION_MSG));
     }
 
-    @And("^user is logged in$")
-    public void userIsLoggedIn() {
-        //aserting that user is correctly logged in
+    @And("^user is logged in and sees name \"([^\"]*)\"$")
+    public void userIsLoggedInAndSeesName(String firstName) throws Throwable {
         WebElement isUserLoggedIn = driver.findElement(By.xpath("//span[@class='account_user_name hide_xs']"));
-        Assert.assertEquals(FIRST_NAME, isUserLoggedIn.getText());
+        Assert.assertEquals(firstName, isUserLoggedIn.getText());
     }
 
     public String generateRandomEmail() {
@@ -96,4 +99,5 @@ public class QloSteps {
         return "testowy" + time + random.nextInt(RANDOM_MAX_RANGE) +
                 "@gmail.com";
     }
+
 }
