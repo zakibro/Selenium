@@ -21,7 +21,8 @@ public class AddressStepDefinitions {
     private LoginPage loginPage;
     private AddressPage addressPage;
     private static final String LOGGED_USER = "Paweł Mazur";
-
+    private static final String EMAIL = "paweltestuje@gmail.com";
+    private static final String PASSWORD = "password123";
 
     @Given("^user is logged in my store$")
     public void userIsLoggedInMyStore() {
@@ -37,7 +38,7 @@ public class AddressStepDefinitions {
         //login correctly to my store
         driver.get("https://prod-kurs.coderslab.pl/index.php?controller=authentication&back=my-account");
         loginPage = new LoginPage(driver);
-        loginPage.loginAs("paweltestuje@gmail.com", "password123");
+        loginPage.loginAs(EMAIL, PASSWORD);
         Assert.assertEquals(LOGGED_USER, loginPage.getLoggedUsername());
 
     }
@@ -50,7 +51,7 @@ public class AddressStepDefinitions {
     }
 
     @And("^user enters required fields with \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\" and \"([^\"]*)\"$")
-    public void userEntersRequiredFieldsWithAnd(String company, String address, String postcode, String city){
+    public void userEntersRequiredFieldsWithData(String company, String address, String postcode, String city) {
         //enter the required fields
         addressPage.enterRequiredFields(company, address, postcode, city);
     }
@@ -62,7 +63,7 @@ public class AddressStepDefinitions {
     }
 
     @Then("^User sees \"([^\"]*)\"$")
-    public void userSees(String successMessage){
+    public void userSeesTheConfirmation(String successMessage) {
         //assert the address has been correctly added
         WebElement successAlert = driver.findElement(By.xpath("//article[@class='alert alert-success']"));
         successAlert.getText().equals(successMessage);
