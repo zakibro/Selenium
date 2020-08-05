@@ -69,4 +69,9 @@ public class AddressStepDefinitions {
         successAlert.getText().equals(successMessage);
         Assert.assertEquals(successMessage, successAlert.getText());
     }
+
+    @And("^quit the browser$")
+    public void quitTheBrowser() {
+        driver.quit();
+    }
 }

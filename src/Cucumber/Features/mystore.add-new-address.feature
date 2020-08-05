@@ -6,6 +6,7 @@ Feature: Create New Address after login
     And user enters required fields with "<company>", "<address>", "<postcode>" and "<city>"
     And user saves information
     Then User sees "Address successfully added!"
+    And quit the browser
 
     Examples:
     |company|address|postcode|city    |
