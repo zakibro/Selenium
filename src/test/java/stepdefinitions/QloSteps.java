@@ -1,6 +1,5 @@
 package stepdefinitions;
 
-import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -11,21 +10,14 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-import java.util.Date;
-import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 public class QloSteps {
 
     private WebDriver driver;
 
-    private static final int RANDOM_MAX_RANGE = 100;
     private static final String SUCCESS_ACCOUNT_CREATION_MSG = "Your account has been created.";
-    Random random = new Random();
-    Date date = new Date();
-    private static final String FIRST_NAME = "Pawel";
-    private static final String LAST_NAME = "Mazur";
-    private static final String PASSWORD = "password123";
+
 
     @Given("^the user is on Qlo register page$")
     public void theUserIsOnQloRegisterPage() {
@@ -50,11 +42,10 @@ public class QloSteps {
         //finding elements
         WebElement emailInput = driver.findElement(By.id("email_create"));
         emailInput.clear();
-        //entering random email and submitting
+        //entering email and submit
         emailInput.sendKeys(email);
         emailInput.submit();
     }
-
 
     @And("^user enters the valid : \"([^\"]*)\", \"([^\"]*)\" and \"([^\"]*)\"$")
     public void userEntersTheValidAnd(String firstName, String lastName, String password) throws Throwable {
@@ -89,15 +80,9 @@ public class QloSteps {
     }
 
     @And("^user is logged in and sees name \"([^\"]*)\"$")
-    public void userIsLoggedInAndSeesName(String firstName) throws Throwable {
+    public void userIsLoggedInAndSeesName(String firstName) {
         WebElement isUserLoggedIn = driver.findElement(By.xpath("//span[@class='account_user_name hide_xs']"));
         Assert.assertEquals(firstName, isUserLoggedIn.getText());
-    }
-
-    public String generateRandomEmail() {
-        long time = date.getTime();
-        return "testowy" + time + random.nextInt(RANDOM_MAX_RANGE) +
-                "@gmail.com";
     }
 
 }

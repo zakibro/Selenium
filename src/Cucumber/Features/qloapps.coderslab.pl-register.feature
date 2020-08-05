@@ -9,6 +9,6 @@ Feature: Qlo register
 
     Examples:
       | email            | firstName | lastName | password    |
-      | pierwyts@o2.pl | Pawel     | Mazur    | password123 |
-      | druges@net.pl  | Kamil     | Kowalski | passwd456   |
-      | trzct@gmil.com | Robert    | Nowak    | haslo12345  |
+      | pierwy23ts@o2.pl | Pawel     | Mazur    | password123 |
+      | druges23@net.pl  | Kamil     | Kowalski | passwd456   |
+      | trzc23t@gmil.com | Robert    | Nowak    | haslo12345  |
