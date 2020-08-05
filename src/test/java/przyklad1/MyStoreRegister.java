@@ -15,7 +15,7 @@ import java.util.Random;
 public class MyStoreRegister {
 
     private WebDriver driver;
-    private static final int NUMBER_OF_ACCOUNTS_TO_CREATE = 10;
+    private static final int NUMBER_OF_ACCOUNTS_TO_CREATE = 5;
     private static final int RANDOM_MAX_RANGE = 100;
     Random random = new Random();
     Date date = new Date();
@@ -58,11 +58,15 @@ public class MyStoreRegister {
             WebElement RegisterFormSaveBtn = driver.findElement(By.xpath("//button[@data-link-action='save-customer']"));
 
             //Enter data to registration form
+            String currentPassword = randomPasswordGenerator();
+            String currentEmail = generateRandomEmail();
+
             firstName.sendKeys(generateRandomFirstName());
             lastName.sendKeys(generateRandomLastName());
-            email.sendKeys(generateRandomEmail());
-            password.sendKeys(randomPasswordGenerator());
+            email.sendKeys(currentEmail);
+            password.sendKeys(currentPassword);
             RegisterFormSaveBtn.click();
+            System.out.println(currentEmail+":"+currentPassword); //to generate data for future tests
 
             //Going to Your account / Addresses
             driver.get("https://prod-kurs.coderslab.pl/index.php?controller=address");
